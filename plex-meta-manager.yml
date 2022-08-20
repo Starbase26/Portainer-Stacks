@@ -1,0 +1,11 @@
+---
+version: '2.1'
+
+services:
+  plex-meta-manager:
+    image: meisnate12/plex-meta-manager:latest
+    container_name: plex-meta-manager
+    restart: unless-stopped
+    volumes:
+      - /srv/storage/pmm-data:/pmm/config
+      
