@@ -12,6 +12,8 @@ services:
   plex-meta-manager-immediate:
       image: meisnate12/plex-meta-manager:latest
       container_name: pmm_now
+      environment:
+        PMM_RUN: true
       volumes:
         - /srv/storage/pmm-data:/pmm/config
       restart: unless-stopped
