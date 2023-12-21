@@ -9,3 +9,10 @@ services:
     volumes:
       - /srv/storage/pmm-data:/pmm/config
       
+  plex-meta-manager-immediate:
+      image: meisnate12/plex-meta-manager:latest
+      container_name: pmm_now
+      restart: unless-stopped
+      volumes:
+        - /srv/storage/pmm-data:/pmm/config
+        
