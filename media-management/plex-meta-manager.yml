@@ -16,7 +16,7 @@ services:
       image: meisnate12/plex-meta-manager:latest
       container_name: pmm_now
       environment:
-      TZ: Europe/Amsterdam
+        TZ: Europe/Amsterdam
         PMM_RUN: true
       volumes:
         - /srv/storage/plex-meta-manager:/config
