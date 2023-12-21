@@ -6,7 +6,8 @@ services:
     image: meisnate12/plex-meta-manager:latest
     container_name: pmm_daily
     environment:
-      PMM_TIMES: 18:00,03:00,15:30
+      TZ: Europe/Amsterdam
+      PMM_TIMES: 18:00,03:00,16:52
     volumes:
       - /srv/storage/plex-meta-manager:/config
     restart: unless-stopped
@@ -15,6 +16,7 @@ services:
   #     image: meisnate12/plex-meta-manager:latest
   #     container_name: pmm_now
   #     environment:
+  #     TZ: Europe/Amsterdam
   #       PMM_RUN: true
   #     volumes:
   #       - /srv/storage/plex-meta-manager:/config
