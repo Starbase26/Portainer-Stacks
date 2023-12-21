@@ -16,4 +16,3 @@ services:
         PMM_RUN: true
       volumes:
         - /srv/storage/plex-meta-manager:/config
-      restart: unless-stopped
