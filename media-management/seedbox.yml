@@ -1,0 +1,98 @@
+---
+version: "3.7"
+
+services:
+
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      PUID: 1000
+      PGID: 1001
+      TZ: Europe/Amsterdam
+      DELUGE_LOG_LEVEL: info
+    volumes:
+      - /srv/docker-container-files/seedbox/deluge:/config
+      - /srv/downloads:/downloads
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      PUID: 1000
+      PGID: 1001
+      TZ: Europe/Amsterdam
+    volumes:
+      - /srv/docker-container-files/seedbox/sonarr:/config
+      - /mnt/tv:/tv
+      - /srv/downloads:/downloads
+      - /mnt/torrents:/mnt/torrents
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      PUID: 1000
+      PGID: 1001
+      TZ: Europe/Amsterdam
+    volumes:
+      - /srv/docker-container-files/seedbox/radarr:/config
+      - /mnt/films/1080p/:/films
+      - /srv/downloads:/downloads
+      - /mnt/torrents:/mnt/torrents
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+
+  radarr4k:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr4k
+    environment:
+      PUID: 1000
+      PGID: 1001
+      TZ: Europe/Amsterdam
+    volumes:
+      - /srv/docker-container-files/seedbox/radarr4k:/config
+      - /mnt/films/4k/:/films
+      - /srv/downloads:/downloads
+      - /mnt/torrents:/mnt/torrents
+    ports:
+      - 7879:7878
+    restart: unless-stopped
+
+  prowlarr:
+    image: linuxserver/prowlarr:develop
+    container_name: prowlarr
+    restart: unless-stopped
+    ports:
+      - 9696:9696
+    cap_add:
+      - NET_ADMIN
+    environment:
+      PUID: 1000
+      PGID: 1001
+      TZ: Europe/Amsterdam
+    volumes:
+      - /srv/docker-container-files/seedbox/prowlarr:/config
+      - /srv/downloads/watched:/downloads  # transmission watch directory
+  
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_HTML: ${LOG_HTML:-false}
+      CAPTCHA_SOLVER: ${CAPTCHA_SOLVER:-none}
+      TZ: Europe/Amsterdam
+    ports:
+      - ${PORT:-8191}:8191
+    restart: unless-stopped
