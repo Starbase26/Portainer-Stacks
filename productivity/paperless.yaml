@@ -89,10 +89,10 @@ services:
   #   image: ghcr.io/paperless-ngx/tika:latest
   #   restart: unless-stopped
 
-# volumes:
+volumes:
+  pgdata:
 #   data:
 #   media:
-#   pgdata:
 #   redisdata:
 
   
