@@ -33,32 +33,27 @@
 version: "3.4"
 services:
   broker:
-    container_name: broker
     image: docker.io/library/redis:7
     restart: unless-stopped
     volumes:
       - redisdata:/data
 
   db:
-    container_name: db
     image: docker.io/library/postgres:15
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
-    environment: 
+    environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
       POSTGRES_PASSWORD: paperless
 
   webserver:
-    container_name: webserver
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
     depends_on:
       - db
       - broker
-      - gotenberg
-      - tika
     ports:
       - "7175:8000"
     volumes:
@@ -70,25 +65,26 @@ services:
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
-      PAPERLESS_TIKA_ENABLED: 1
-      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
-      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
 
-  gotenberg:
-    container_name: gotenberg
-    image: docker.io/gotenberg/gotenberg:7.10
-    restart: unless-stopped
-    # The gotenberg chromium route is used to convert .eml files. We do not
-    # want to allow external content like tracking pixels or even javascript.
-    command:
-      - "gotenberg"
-      - "--chromium-disable-javascript=true"
-      - "--chromium-allow-list=file:///tmp/.*"
+  #     PAPERLESS_TIKA_ENABLED: 1
+  #     PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+  #     PAPERLESS_TIKA_ENDPOINT: http://tika:9998
 
-  tika:
-    container_name: tika
-    image: ghcr.io/paperless-ngx/tika:latest
-    restart: unless-stopped
+  # gotenberg:
+  #   container_name: gotenberg
+  #   image: docker.io/gotenberg/gotenberg:7.10
+  #   restart: unless-stopped
+  #   # The gotenberg chromium route is used to convert .eml files. We do not
+  #   # want to allow external content like tracking pixels or even javascript.
+  #   command:
+  #     - "gotenberg"
+  #     - "--chromium-disable-javascript=true"
+  #     - "--chromium-allow-list=file:///tmp/.*"
+
+  # tika:
+  #   container_name: tika
+  #   image: ghcr.io/paperless-ngx/tika:latest
+  #   restart: unless-stopped
 
 volumes:
   data:
