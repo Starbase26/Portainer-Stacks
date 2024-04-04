@@ -42,6 +42,7 @@ services:
 # db type is sqlite
 
   webserver:
+    container_name: webserver
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
     depends_on:
@@ -72,7 +73,7 @@ services:
 # The container installs English, German, Italian, Spanish and French by
 # default.
 # See https://packages.debian.org/search?keywords=tesseract-ocr-&searchon=names&suite=buster
-      #PAPERLESS_OCR_LANGUAGES: 
+      PAPERLESS_OCR_LANGUAGES: nld
       PAPERLESS_SECRET_KEY: a19b2b61f81cffd8bf3866e032fe366984e46f3043aed79d3e17d0c585fe77af199b6a0b962f704b94d3e157504285036893b96e6145d362bc3299d53e219175
 # Use this variable to set a timezone for the Paperless Docker containers. If not specified, defaults to UTC.
       PAPERLESS_TIME_ZONE: Europe/Amsterdam
