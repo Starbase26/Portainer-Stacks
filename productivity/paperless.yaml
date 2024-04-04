@@ -68,26 +68,25 @@ services:
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBHOST: db
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
 
-  #     PAPERLESS_TIKA_ENABLED: 1
-  #     PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
-  #     PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+  gotenberg:
+    container_name: paperless-gotenberg
+    image: docker.io/gotenberg/gotenberg:7.10
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
 
-  # gotenberg:
-  #   container_name: paperless-gotenberg
-  #   image: docker.io/gotenberg/gotenberg:7.10
-  #   restart: unless-stopped
-  #   # The gotenberg chromium route is used to convert .eml files. We do not
-  #   # want to allow external content like tracking pixels or even javascript.
-  #   command:
-  #     - "gotenberg"
-  #     - "--chromium-disable-javascript=true"
-  #     - "--chromium-allow-list=file:///tmp/.*"
-
-  # tika:
-  #   container_name: paperless-tika
-  #   image: ghcr.io/paperless-ngx/tika:latest
-  #   restart: unless-stopped
+  tika:
+    container_name: paperless-tika
+    image: ghcr.io/paperless-ngx/tika:latest
+    restart: unless-stopped
 
 volumes:
   pgdata:
