@@ -92,4 +92,5 @@ services:
 volumes:
   data:
   media:
+  pgdata:
   redisdata:
