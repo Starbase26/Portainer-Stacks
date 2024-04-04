@@ -37,7 +37,7 @@ services:
     image: docker.io/library/redis:7
     restart: unless-stopped
     volumes:
-      - redisdata:/data
+      - /srv/server-files/dmssrv-01/data:/data
 
   db:
     container_name: paperless-db
@@ -60,10 +60,10 @@ services:
     ports:
       - "7175:8000"
     volumes:
-      - data:/usr/src/paperless/data
-      - media:/usr/src/paperless/media
-      - ./export:/usr/src/paperless/export
-      - ./consume:/usr/src/paperless/consume
+      - /srv/server-files/dmssrv-01/data:/usr/src/paperless/data
+      - /srv/server-files/dmssrv-01/media:/usr/src/paperless/media
+      - /srv/server-files/dmssrv-01/export:/usr/src/paperless/export
+      - /srv/zakelijk/_PostvakIn:/usr/src/paperless/consume
     env_file: paperless.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
@@ -89,8 +89,10 @@ services:
   #   image: ghcr.io/paperless-ngx/tika:latest
   #   restart: unless-stopped
 
-volumes:
-  data:
-  media:
-  pgdata:
-  redisdata:
+# volumes:
+#   data:
+#   media:
+#   pgdata:
+#   redisdata:
+
+  
