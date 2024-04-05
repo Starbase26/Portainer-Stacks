@@ -4,11 +4,11 @@ services:
     image: lscr.io/linuxserver/freshrss:latest
     container_name: freshrss
     environment:
-      - PUID: 1000
-      - PGID: 999
-      - TZ: Europe/Amsterdam
+      PUID: 1000
+      PGID: 999
+      TZ: Europe/Amsterdam
     volumes:
       - /srv/server-files/freshrss/data:/config 
     ports:
-      - 80:80 
+      "8066:80" 
     restart: unless-stopped
