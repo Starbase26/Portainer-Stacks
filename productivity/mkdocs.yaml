@@ -1,6 +1,7 @@
 version: "3"
 services:
   mkdocs:
+    container_name: mkdocs
     image: squidfunk/mkdocs-material
     ports:
       - "8005:8000"
