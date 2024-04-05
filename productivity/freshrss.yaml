@@ -10,5 +10,5 @@ services:
     volumes:
       - /srv/server-files/freshrss/data:/config 
     ports:
-      "8066:80" 
+      - "8066:80" 
     restart: unless-stopped
