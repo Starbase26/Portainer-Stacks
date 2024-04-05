@@ -2,8 +2,8 @@ version: "3"
 services:
   mkdocs:
     container_name: mkdocs
-    image: squidfunk/mkdocs-material
-    # image: nemes
+    # image: squidfunk/mkdocs-material
+    image: sb26/mkdocs-with-themes
     ports:
       - "8005:8000"
     volumes:
