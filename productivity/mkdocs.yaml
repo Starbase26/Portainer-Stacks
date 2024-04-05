@@ -3,7 +3,7 @@ services:
   mkdocs:
     container_name: mkdocs
     # image: squidfunk/mkdocs-material
-    image: sb26/mkdocs-with-themes
+    image: starbase26/mkdocs-with-themes
     ports:
       - "8005:8000"
     volumes:
